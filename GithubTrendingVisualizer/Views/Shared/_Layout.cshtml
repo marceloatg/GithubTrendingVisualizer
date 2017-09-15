@@ -7,14 +7,19 @@
 
     <environment include="Development">
         <link rel="stylesheet" type="text/css" href="~/lib/semantic/dist/semantic.css">
-        <link rel="stylesheet" href="~/css/site.css" />
+        <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     </environment>
     <environment exclude="Development">
         <link rel="stylesheet" type="text/css" href="~/lib/semantic/dist/semantic.min.css">
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
     </environment>
+    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 </head>
 <body>
+    @await Html.PartialAsync("_Header")
+    <div class="">
+
+    </div>
     @RenderBody()
 
     <environment include="Development">

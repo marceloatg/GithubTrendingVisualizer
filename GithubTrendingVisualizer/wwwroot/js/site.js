@@ -1,1 +1,1 @@
-﻿// Write your JavaScript code.
+﻿$(".ui.dropdown").dropdown();
