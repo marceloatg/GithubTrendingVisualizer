@@ -1,4 +1,6 @@
-﻿using GithubTrendingVisualizer.Models.Repositories;
+﻿using System.Threading.Tasks;
+using GithubTrendingVisualizer.Models.Repositories;
+using GithubTrendingVisualizer.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GithubTrendingVisualizer.Web.Controllers
@@ -6,11 +8,17 @@ namespace GithubTrendingVisualizer.Web.Controllers
     [Route("[controller]")]
     public class RepositoriesController : Controller
     {
-        [HttpGet]
-        public IActionResult Index()
-        {
-            var model = new RepositoriesViewModel();
+        private RepositoriesServices RepositoriesServices { get; }
 
+        public RepositoriesController()
+        {
+            RepositoriesServices = new RepositoriesServices();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Index()
+        {
+            RepositoriesViewModel model = await RepositoriesServices.CreateRepositoriesViewModel();
             return View(model);
         }
 

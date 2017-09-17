@@ -1,97 +1,81 @@
 ﻿@using GithubTrendingVisualizer.Models.Repositories
+@using Octokit
 @model RepositoriesViewModel
 
 <div id="repositories-content" class="ui container">
-    
+
     @* Title *@
     <h1 class="ui dividing header">
         <div class="content">
             Trending in open source
             <div class="sub header">
-                See what the GitHub community is most excited about today.
+                See what the GitHub community is most excited about today. (@Model.RateLimit.Remaining/@Model.RateLimit.Limit)
             </div>
         </div>
     </h1>
-    
+
     @* Item list *@
     <div class="ui middle aligned selection items list">
 
-        @for (var i = 0; i < 5; i++)
+        @foreach (Repository repository in Model.Repositories)
         {
             <div class="item card">
 
-                @* Image *@
-                <div class="ui tiny image">
-                    <img src="https://semantic-ui.com/images/avatar/large/stevie.jpg">
-                </div>
+                @* Image
+                    <div class="ui tiny image">
+                        <img src="https://semantic-ui.com/images/avatar/large/stevie.jpg">
+                    </div>
+                *@
 
                 @* Content *@
                 <div class="content">
 
                     @* Header *@
-                    <a class="header">
-                        openebs / openebs
+                    <a href="@repository.HtmlUrl" class="header">
+                        <h2>
+                            @repository.Name
+                        </h2>
                     </a>
-
-                    @* Meta *@
-                    <div class="meta">
-                        <span>
-                            <i class="star icon"></i>
-                            200 stars today
-                        </span>
-                    </div>
 
                     @* Description *@
                     <div class="description">
-                        OpenEBS is containerized block storage written in Go for cloud native and other environments w/ per container (or pod) QoS SLAs, tiering and replica policies across AZs and environments, and predictable and scalable performance.
+                        @repository.Description
                     </div>
 
                     @* Extra *@
                     <div class="extra">
-                        
+
                         @* Save button *@
                         <div class="ui right floated primary button">
                             <i class="save icon"></i>
                             Save
                         </div>
-                        
+
                         @* Fork button *@
                         <div class="ui right floated left labeled button" tabindex="0">
                             <a class="ui basic right pointing label">
-                                181
+                                @repository.ForksCount.ToString("N0")
                             </a>
                             <div class="ui button">
                                 <i class="fork icon"></i>Fork
                             </div>
                         </div>
-                        
+
                         @* Star button *@
                         <div class="ui right floated left labeled button" tabindex="0">
                             <a class="ui basic right pointing label">
-                                2,070
+                                @repository.StargazersCount.ToString("N0")
                             </a>
                             <div class="ui button">
                                 <i class="star icon"></i> Star
                             </div>
                         </div>
-                        
-                        @* Built by *@
-                        <span>
-                            Built by
-                        </span>
-                        
-                        @* Avatars *@
-                        <div class="ui tiny horizontal list">
-                            <div class="item">
-                                <img class="ui avatar image" src="https://semantic-ui.com/images/avatar/small/daniel.jpg">
-                            </div>
-                            <div class="item">
-                                <img class="ui avatar image" src="https://semantic-ui.com/images/avatar/small/stevie.jpg">
-                            </div>
-                            <div class="item">
-                                <img class="ui avatar image" src="https://semantic-ui.com/images/avatar/small/elliot.jpg">
-                            </div>
-                        </div>
+
+                        @* Owner *@
+                        <a href="@repository.Owner.HtmlUrl" class="ui left floated item">
+                            <img class="ui avatar image square" src="@repository.Owner.AvatarUrl">
+                            <span>@repository.Owner.Login</span>
+                        </a>
 
                     </div>
 
