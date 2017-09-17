@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace GithubTrendingVisualizer.Controllers
+namespace GithubTrendingVisualizer.Web.Controllers
 {
     [Route("[controller]")]
     public class RepositoriesController : Controller

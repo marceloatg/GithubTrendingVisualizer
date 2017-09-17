@@ -1,8 +1,8 @@
-﻿using GithubTrendingVisualizer.Models;
+﻿using System.Diagnostics;
+using GithubTrendingVisualizer.Web.Models;
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
 
-namespace GithubTrendingVisualizer.Controllers
+namespace GithubTrendingVisualizer.Web.Controllers
 {
     public class HomeController : Controller
     {
