@@ -6,7 +6,7 @@ namespace GithubTrendingVisualizer.Web.Controllers
     public class DevelopersController : Controller
     {
         [HttpGet]
-        public IActionResult Index()
+        public IActionResult Trending()
         {
             return View();
         }

@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Globalization;
 
-namespace GithubTrendingVisualizer.Services
+namespace GithubTrendingVisualizer.Services.Octokit
 {
-    public class SearchRepositoriesRequest : Octokit.SearchRepositoriesRequest
+    public class SearchRepositoriesRequest : global::Octokit.SearchRepositoriesRequest
     {
 
         public override IReadOnlyList<string> MergedQualifiers()

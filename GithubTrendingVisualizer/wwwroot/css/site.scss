@@ -41,7 +41,11 @@ body {
 }
 
 .square {
-    border-radius: 3px!important;
+    border-radius: 3px !important;
+}
+
+.circle {
+    border-radius: 50% !important;
 }
 
 #repositories-content {

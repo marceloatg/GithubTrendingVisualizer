@@ -16,9 +16,9 @@ namespace GithubTrendingVisualizer.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Trending([FromQuery] int page)
         {
-            RepositoriesViewModel model = await RepositoriesServices.CreateRepositoriesViewModel();
+            RepositoriesViewModel model = await RepositoriesServices.CreateRepositoriesViewModel(page);
             return View(model);
         }
 

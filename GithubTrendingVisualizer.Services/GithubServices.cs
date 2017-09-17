@@ -2,12 +2,14 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using SearchRepositoriesRequest = GithubTrendingVisualizer.Services.Octokit.SearchRepositoriesRequest;
 
 namespace GithubTrendingVisualizer.Services
 {
     public class GithubServices
     {
         private GitHubClient Client { get; }
+        private const int PerPage = 10;
 
         public GithubServices()
         {
@@ -15,7 +17,7 @@ namespace GithubTrendingVisualizer.Services
         }
 
         public async Task<(List<Repository> repositories, RateLimit rateLimit)>
-            GetTrendingRepositories(int page = 1, int perPage = 10)
+            GetTrendingRepositories(int page)
         {
             var repositories = new List<Repository>();
 
@@ -25,21 +27,13 @@ namespace GithubTrendingVisualizer.Services
                 SortField = RepoSearchSort.Stars,
                 Order = SortDirection.Descending,
                 Page = page,
-                PerPage = perPage,
+                PerPage = PerPage,
             };
 
-            try
-            {
-                SearchRepositoryResult response = await Client.Search.SearchRepo(request);
-                repositories.AddRange(response.Items);
+            SearchRepositoryResult response = await Client.Search.SearchRepo(request);
+            repositories.AddRange(response.Items);
 
-                return (repositories, GetRateLimit());
-            }
-            catch (Exception exception)
-            {
-                Console.WriteLine(exception);
-                throw;
-            }
+            return (repositories, GetRateLimit());
         }
 
         public void GetTrendingDevelopers()

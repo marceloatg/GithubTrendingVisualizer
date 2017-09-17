@@ -19,13 +19,36 @@
 
         @foreach (Repository repository in Model.Repositories)
         {
+            string language;
+            switch (repository.Language)
+            {
+                case "C++":
+                    language = "CPlusPlus";
+                    break;
+
+                case "C#":
+                    language = "CSharp";
+                    break;
+
+                case "Objective-C":
+                    language = "ObjectiveC";
+                    break;
+
+                case "Objective-C++":
+                    language = "ObjectiveCPlusPlus";
+                    break;
+
+                default:
+                    language = repository.Language;
+                    break;
+            }
+
             <div class="item card">
 
-                @* Image
-                    <div class="ui tiny image">
-                        <img src="https://semantic-ui.com/images/avatar/large/stevie.jpg">
-                    </div>
-                *@
+                @* Image *@
+                <div class="ui tiny image" title="@repository.Language">
+                    <img class="circle" src="images/languages/@(language).svg" onerror="this.src = 'images/languages/default.svg'">
+                </div>
 
                 @* Content *@
                 <div class="content">
@@ -85,5 +108,58 @@
         }
 
     </div>
+
+    @* Pagination *@
+    <div class="ui pagination menu">
+
+        @if (Model.Page > 2)
+            {
+            <a asp-action="Trending" asp-route-page="1" class="item">
+                1
+            </a>
+        }
+        @if (Model.Page > 3)
+        {
+            <div class="disabled item">
+                ...
+            </div>
+        }
+
+        @if (Model.Page > 1)
+        {
+            <a asp-action="Trending" asp-route-page="@(Model.Page - 1)" class="item">
+                @(Model.Page - 1)
+            </a>
+        }
+
+        <a class="item active">
+            @(Model.Page)
+        </a>
+
+        @if (Model.Page < 100)
+        {
+            <a asp-action="Trending" asp-route-page="@(Model.Page + 1)" class="item">
+                @(Model.Page + 1)
+            </a>
+        }
+
+        @if (Model.Page < 98)
+        {
+            <div class="disabled item">
+                ...
+            </div>
+        }
+
+        @if (Model.Page < 99)
+        {
+            <a asp-action="Trending" asp-route-page="100" class="item">
+                100
+            </a>
+        }
+
+    </div>
+
+    <br />
+    <br />
 
 </div>
