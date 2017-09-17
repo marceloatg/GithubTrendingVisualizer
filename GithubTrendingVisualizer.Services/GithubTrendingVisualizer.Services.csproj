@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Octokit" Version="0.26.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\GithubTrendingVisualizer.Data\GithubTrendingVisualizer.Data.csproj" />
     <ProjectReference Include="..\GithubTrendingVisualizer.Models\GithubTrendingVisualizer.Models.csproj" />
   </ItemGroup>

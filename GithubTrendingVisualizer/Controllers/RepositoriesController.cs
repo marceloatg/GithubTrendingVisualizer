@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using GithubTrendingVisualizer.Models.Repositories;
+using Microsoft.AspNetCore.Mvc;
 
 namespace GithubTrendingVisualizer.Web.Controllers
 {
@@ -8,7 +9,9 @@ namespace GithubTrendingVisualizer.Web.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            return View();
+            var model = new RepositoriesViewModel();
+
+            return View(model);
         }
 
         [HttpGet]
