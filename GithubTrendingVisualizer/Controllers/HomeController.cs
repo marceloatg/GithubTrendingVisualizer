@@ -1,6 +1,6 @@
-﻿using System.Diagnostics;
-using GithubTrendingVisualizer.Web.Models;
+﻿using GithubTrendingVisualizer.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
 
 namespace GithubTrendingVisualizer.Web.Controllers
 {

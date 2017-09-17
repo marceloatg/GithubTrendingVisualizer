@@ -1,4 +1,4 @@
-namespace GithubTrendingVisualizer.Web.Models
+namespace GithubTrendingVisualizer.Models
 {
     public class ErrorViewModel
     {
