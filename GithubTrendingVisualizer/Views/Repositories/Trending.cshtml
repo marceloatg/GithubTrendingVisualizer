@@ -1,0 +1,169 @@
+﻿@using GithubTrendingVisualizer.Models.Repositories
+@using Octokit
+@model RepositoriesViewModel
+
+<div id="repositories-content" class="ui container">
+
+    @* Title *@
+    <form class="ui form segment">
+
+        @* Header *@
+        <h1 class="ui dividing header">
+            <div class="content">
+                Trending in open source
+                <div class="sub header">
+                    See what the GitHub community is most excited about. (@Model.RateLimit.Remaining/@Model.RateLimit.Limit)
+                </div>
+            </div>
+        </h1>
+
+        @* Fields *@
+        <input type="hidden" name="Page" value="@Model.Page" />
+
+        @* Language *@
+        <div class="field">
+            <div class="ui fluid search selection dropdown">
+                <input asp-for="Language" type="hidden">
+                <i class="dropdown icon"></i>
+                <div class="default text">All Languages</div>
+                <div class="menu">
+                    @foreach (object language in Enum.GetValues(typeof(Language)))
+                    {
+                        <div class="item" data-value="@language.ToString()">
+                            @language
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+        @* Button *@
+        <div class="field">
+            <button id="filter-repositories-button" type="submit" class="ui primary button">
+                Filter
+            </button>
+        </div>
+
+    </form>
+
+    @* Item list *@
+    <div class="ui middle aligned selection items list">
+
+        @foreach (Repository repository in Model.Repositories)
+        {
+            string language;
+            switch (repository.Language)
+            {
+                case "C++":
+                    language = "CPlusPlus";
+                    break;
+
+                case "C#":
+                    language = "CSharp";
+                    break;
+
+                case "Objective-C":
+                    language = "ObjectiveC";
+                    break;
+
+                case "Objective-C++":
+                    language = "ObjectiveCPlusPlus";
+                    break;
+
+                default:
+                    language = repository.Language;
+                    break;
+            }
+
+            <div id="@repository.Id" class="item card">
+
+                <input name="GithubId" type="hidden" value="@repository.Id" />
+                <input name="Name" type="hidden" value="@repository.Name" />
+                <input name="HtmlUrl" type="hidden" value="@repository.HtmlUrl" />
+                <input name="ForksCount" type="hidden" value="@repository.ForksCount" />
+                <input name="StargazersCount" type="hidden" value="@repository.StargazersCount" />
+                <input name="Description" type="hidden" value="@repository.Description" />
+                <input name="Language" type="hidden" value="@language" />
+                <input name="OwnerName" type="hidden" value="@repository.Owner.Login" />
+                <input name="OwnerHtmlUrl" type="hidden" value="@repository.Owner.HtmlUrl" />
+                <input name="OwnerAvatarUrl" type="hidden" value="@repository.Owner.AvatarUrl" />
+
+                @* Image *@
+                <div class="ui tiny image" title="@repository.Language">
+                    <img class="circle" src="~/images/languages/@(language).svg" onerror="this.src='~/images/languages/default.svg'">
+                </div>
+
+                @* Content *@
+                <div class="content">
+
+                    @* Header *@
+                    <a href="@repository.HtmlUrl" class="header">
+                        <h2>
+                            @repository.Name
+                        </h2>
+                    </a>
+
+                    @* Meta *@
+                    <div class="meta">
+
+                        @* Forks count *@
+                        <span>
+                            <i class="star icon"></i>
+                            @repository.StargazersCount.ToString("N0")
+                        </span>
+
+                        @* Stars count *@
+                        <span>
+                            <i class="fork icon"></i>
+                            @repository.ForksCount.ToString("N0")
+                        </span>
+
+                    </div>
+
+                    @* Description *@
+                    <div class="description">
+                        @repository.Description
+                    </div>
+
+                    @* Extra *@
+                    <div class="extra">
+
+                        @* Save button *@
+                        @if (Model.SavedRepositories[repository.Id])
+                        {
+                            <div data-button="saved-repository" data-id="@repository.Id" class="ui right floated basic button unclickable">
+                                <i data-button="icon" class="checkmark icon"></i>
+                                <span data-button="text">Saved</span>
+                            </div>
+                        }
+                        else
+                        {
+                            <div data-button="save-repository" data-id="@repository.Id" class="ui right floated primary button">
+                                <i data-button="icon" class="save icon"></i>
+                                <span data-button="text">Save</span>
+                            </div>
+                        }
+
+
+                        @* Owner *@
+                        <a href="@repository.Owner.HtmlUrl" class="ui left floated item">
+                            <img class="ui avatar image square" src="@repository.Owner.AvatarUrl">
+                            <span>@repository.Owner.Login</span>
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+        }
+
+    </div>
+
+    @* Pagination *@
+    @await Html.PartialAsync("_TrendingPagination", Model, null)
+
+    <br />
+    <br />
+
+</div>

@@ -1,0 +1,117 @@
+﻿@using GithubTrendingVisualizer.Models.Repositories
+@using Octokit
+@model SavedRepositoriesViewModel
+
+<div id="repositories-content" class="ui container">
+
+    @* Title *@
+    <form class="ui form segment">
+
+        @* Header *@
+        <h1 class="ui dividing header">
+            <div class="content">
+                Saved trending repositories
+                <div class="sub header">
+                    See what users have saved from Github trending repositories.
+                </div>
+            </div>
+        </h1>
+
+        @* Fields *@
+        <input type="hidden" name="Page" value="@Model.Page" />
+
+        @* Language *@
+        <div class="field">
+            <div class="ui fluid search selection dropdown">
+                <input asp-for="Language" type="hidden">
+                <i class="dropdown icon"></i>
+                <div class="default text">All Languages</div>
+                <div class="menu">
+                    @foreach (object language in Enum.GetValues(typeof(Language)))
+                    {
+                        <div class="item" data-value="@language.ToString()">
+                            @language
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+        @* Button *@
+        <div class="field">
+            <button id="filter-repositories-button" type="submit" class="ui primary button">
+                Filter
+            </button>
+        </div>
+
+    </form>
+
+    @* Item list *@
+    <div class="ui middle aligned selection items list">
+
+        @foreach (var repository in Model.Repositories)
+        {
+            <div id="@repository.Id" class="item card">
+
+                @* Image *@
+                <div class="ui tiny image" title="@repository.Language">
+                    <img class="circle" src="~/images/languages/@(repository.Language).svg" onerror="this.src ='~/images/languages/default.svg'">
+                </div>
+
+                @* Content *@
+                <div class="content">
+
+                    @* Header *@
+                    <a href="@repository.HtmlUrl" class="header">
+                        <h2>
+                            @repository.Name
+                        </h2>
+                    </a>
+
+                    @* Meta *@
+                    <div class="meta">
+
+                        @* Forks count *@
+                        <span>
+                            <i class="star icon"></i>
+                            @repository.StargazersCount.ToString("N0")
+                        </span>
+
+                        @* Stars count *@
+                        <span>
+                            <i class="fork icon"></i>
+                            @repository.ForksCount.ToString("N0")
+                        </span>
+
+                    </div>
+
+                    @* Description *@
+                    <div class="description">
+                        @repository.Description
+                    </div>
+
+                    @* Extra *@
+                    <div class="extra">
+
+                        @* Owner *@
+                        <a href="@repository.OwnerHtmlUrl" class="ui left floated item">
+                            <img class="ui avatar image square" src="@repository.OwnerAvatarUrl">
+                            <span>@repository.OwnerName</span>
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+        }
+
+    </div>
+
+    @* Pagination *@
+    @await Html.PartialAsync("_SavedPagination", Model, null)
+
+    <br />
+    <br />
+
+</div>

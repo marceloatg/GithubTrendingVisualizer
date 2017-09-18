@@ -1,0 +1,54 @@
+﻿@using GithubTrendingVisualizer.Models.Repositories
+@model RepositoriesViewModel
+
+@if (Model.TotalCount > 0)
+{
+    <div class="ui pagination menu">
+
+        @if (Model.Page > 2)
+        {
+            <a asp-action="Trending" asp-route-page="1" asp-route-language="@Model.Language" class="item">
+                1
+            </a>
+        }
+        @if (Model.Page > 3)
+        {
+            <div class="disabled item">
+                ...
+            </div>
+        }
+
+        @if (Model.Page > 1)
+        {
+            <a asp-action="Trending" asp-route-page="@(Model.Page - 1)" asp-route-language="@Model.Language" class="item">
+                @(Model.Page - 1)
+            </a>
+        }
+
+        <a class="item active">
+            @(Model.Page)
+        </a>
+
+        @if (Model.Page < Math.Ceiling(Model.TotalCount / 10.0) && Model.Page < 100)
+        {
+            <a asp-action="Trending" asp-route-page="@(Model.Page + 1)" asp-route-language="@Model.Language" class="item">
+                @(Model.Page + 1)
+            </a>
+        }
+
+        @if (Model.Page < Math.Ceiling((Model.TotalCount - 20) / 10.0) && Model.Page < 98)
+        {
+            <div class="disabled item">
+                ...
+            </div>
+        }
+
+        @if (Model.Page < Math.Ceiling((Model.TotalCount - 10) / 10.0) && Model.Page < 99)
+        {
+            <a asp-action="Trending" asp-route-page="@Math.Ceiling(Model.TotalCount / 10.0)" asp-route-language="@Model.Language" class="item">
+                @(Math.Ceiling(Model.TotalCount / 10.0) > 100 ? 100 : Math.Ceiling(Model.TotalCount / 10.0))
+            </a>
+        }
+
+    </div>
+}
