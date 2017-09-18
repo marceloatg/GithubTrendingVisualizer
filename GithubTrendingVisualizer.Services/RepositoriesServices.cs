@@ -1,4 +1,6 @@
-﻿using GithubTrendingVisualizer.Models.Repositories;
+﻿using System.Collections.Generic;
+using System.Linq;
+using GithubTrendingVisualizer.Models.Repositories;
 using System.Threading.Tasks;
 using GithubTrendingVisualizer.Data.Models;
 using GithubTrendingVisualizer.Data.Repositories;
@@ -21,13 +23,27 @@ namespace GithubTrendingVisualizer.Services
             if (page < 1) { page = 1; }
             if (page > 100) { page = 100; }
 
+            // reading from Github
             var repositoriesResponse = await GithubServices.GetTrendingRepositories(page);
+            var savedRepositories = repositoriesResponse.repositories.ToDictionary(repository => repository.Id, repository => false);
+
+            // reading from database
+            var savedRepositoriesReading =
+                new RepositoryRepository(Context).List(repository =>
+                    savedRepositories.Keys.Contains(repository.GithubId));
+
+            if (savedRepositoriesReading.entities == null) { return null; }
+            foreach (Repository repository in savedRepositoriesReading.entities)
+            {
+                savedRepositories[repository.GithubId] = true;
+            }
 
             var model = new RepositoriesViewModel
             {
                 Repositories = repositoriesResponse.repositories,
                 RateLimit = repositoriesResponse.rateLimit,
-                Page = page
+                Page = page,
+                SavedRepositories = savedRepositories
             };
 
             return model;

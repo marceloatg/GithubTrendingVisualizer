@@ -55,3 +55,8 @@ body {
         color: $color-black;
     }
 }
+
+.unclickable {
+    pointer-events: none !important;
+    cursor: default !important;
+}

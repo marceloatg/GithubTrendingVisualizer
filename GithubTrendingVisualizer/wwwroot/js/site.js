@@ -6,7 +6,7 @@
 $(".ui.dropdown")
     .dropdown();
 
-$(".save-repository-button")
+$("[data-button='save-repository']")
     .on("click", saveRepository);
 
 /*
@@ -29,7 +29,7 @@ function saveRepository(event) {
         data: JSON.stringify(model),
         success: function (result) {
 
-            if (Boolean(result)) { saveRepositorySucceeded(event); }
+            if (result) { saveRepositorySucceeded(event); }
             else { saveRepositoryFailed(); }
         },
         error: function (result) {
@@ -61,7 +61,8 @@ function saveRepositorySucceeded(event) {
 
     $(event.currentTarget)
         .removeClass("loading primary")
-        .addClass("basic");
+        .addClass("basic unclickable")
+        .attr("data-button", "saved-repository");
 
     $(event.currentTarget)
         .find("[data-button='icon']")

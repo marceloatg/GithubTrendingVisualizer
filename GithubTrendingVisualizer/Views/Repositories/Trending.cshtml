@@ -95,12 +95,23 @@
 
                     @* Extra *@
                     <div class="extra">
-
+                        
                         @* Save button *@
-                        <div data-id="@repository.Id" class="ui right floated primary button save-repository-button">
-                            <i data-button="icon" class="save icon"></i>
-                            <span data-button="text">Save</span>
-                        </div>
+                        @if (Model.SavedRepositories[repository.Id])
+                        {
+                            <div data-button="saved-repository" data-id="@repository.Id" class="ui right floated basic button unclickable">
+                                <i data-button="icon" class="checkmark icon"></i>
+                                <span data-button="text">Saved</span>
+                            </div>
+                        }
+                        else
+                        {
+                            <div data-button="save-repository" data-id="@repository.Id" class="ui right floated primary button">
+                                <i data-button="icon" class="save icon"></i>
+                                <span data-button="text">Save</span>
+                            </div>
+                        }
+
 
                         @* Owner *@
                         <a href="@repository.Owner.HtmlUrl" class="ui left floated item">
