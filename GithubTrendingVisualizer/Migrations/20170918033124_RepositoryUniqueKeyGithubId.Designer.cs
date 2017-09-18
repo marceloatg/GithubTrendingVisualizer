@@ -11,9 +11,10 @@ using System;
 namespace GithubTrendingVisualizer.Web.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20170918033124_RepositoryUniqueKeyGithubId")]
+    partial class RepositoryUniqueKeyGithubId
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

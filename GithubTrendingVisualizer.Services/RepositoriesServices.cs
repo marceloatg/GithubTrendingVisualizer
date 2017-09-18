@@ -1,14 +1,18 @@
 ﻿using GithubTrendingVisualizer.Models.Repositories;
 using System.Threading.Tasks;
+using GithubTrendingVisualizer.Data.Models;
+using GithubTrendingVisualizer.Data.Repositories;
 
 namespace GithubTrendingVisualizer.Services
 {
     public class RepositoriesServices
     {
+        private Context Context { get; }
         private GithubServices GithubServices { get; }
 
-        public RepositoriesServices()
+        public RepositoriesServices(Context context)
         {
+            Context = context;
             GithubServices = new GithubServices();
         }
 
@@ -27,6 +31,12 @@ namespace GithubTrendingVisualizer.Services
             };
 
             return model;
+        }
+
+        public bool SaveRepository(Repository repository)
+        {
+            var insertion = new RepositoryRepository(Context).Insert(repository);
+            return insertion.succeeded;
         }
     }
 }

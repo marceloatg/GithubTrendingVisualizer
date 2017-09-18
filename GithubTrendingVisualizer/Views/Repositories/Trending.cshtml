@@ -42,8 +42,19 @@
                     language = repository.Language;
                     break;
             }
-
-            <div class="item card">
+            
+            <div id="@repository.Id" class="item card">
+                
+                <input name="GithubId" type="hidden" value="@repository.Id" />
+                <input name="Name" type="hidden" value="@repository.Name" />
+                <input name="HtmlUrl" type="hidden" value="@repository.HtmlUrl" />
+                <input name="ForksCount" type="hidden" value="@repository.ForksCount" />
+                <input name="StargazersCount" type="hidden" value="@repository.StargazersCount" />
+                <input name="Description" type="hidden" value="@repository.Description" />
+                <input name="Language" type="hidden" value="@language" />
+                <input name="OwnerName" type="hidden" value="@repository.Owner.Login" />
+                <input name="OwnerHtmlUrl" type="hidden" value="@repository.Owner.HtmlUrl" />
+                <input name="OwnerAvatarUrl" type="hidden" value="@repository.Owner.AvatarUrl" />
 
                 @* Image *@
                 <div class="ui tiny image" title="@repository.Language">
@@ -86,9 +97,9 @@
                     <div class="extra">
 
                         @* Save button *@
-                        <div id="save-repository-button" class="ui right floated primary button">
-                            <i class="save icon"></i>
-                            Save
+                        <div data-id="@repository.Id" class="ui right floated primary button save-repository-button">
+                            <i data-button="icon" class="save icon"></i>
+                            <span data-button="text">Save</span>
                         </div>
 
                         @* Owner *@

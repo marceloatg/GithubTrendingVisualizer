@@ -8,7 +8,7 @@ namespace GithubTrendingVisualizer.Data.Models
 
         public long GithubId { get; set; }
 
-        public string Name { get; protected set; }
+        public string Name { get; set; }
 
         public string HtmlUrl { get; set; }
 
@@ -16,24 +16,24 @@ namespace GithubTrendingVisualizer.Data.Models
 
         public int StargazersCount { get; set; }
 
-        public string Description { get; protected set; }
+        public string Description { get; set; }
 
-        public string Language { get; protected set; }
+        public string Language { get; set; }
 
         /// <summary>
         /// The account's full name.
         /// </summary>
-        public string OwnerName { get; protected set; }
+        public string OwnerName { get; set; }
 
         /// <summary>
         /// The HTML URL for the account on github.com (or GitHub Enterprise).
         /// </summary>
-        public string OwnerHtmlUrl { get; protected set; }
+        public string OwnerHtmlUrl { get; set; }
 
         /// <summary>
         /// URL of the account's avatar.
         /// </summary>
-        public string OwnerAvatarUrl { get; protected set; }
+        public string OwnerAvatarUrl { get; set; }
 
     }
 }

@@ -7,7 +7,7 @@ using System.Linq.Expressions;
 
 namespace GithubTrendingVisualizer.Data.Repositories
 {
-    public abstract class Repository<TEntity> where TEntity: class, IEntity
+    public abstract class Repository<TEntity> where TEntity : class, IEntity
     {
         private Context Context { get; }
 
@@ -16,39 +16,104 @@ namespace GithubTrendingVisualizer.Data.Repositories
             Context = context;
         }
 
-        public virtual TEntity GetById(int id)
+        public virtual (TEntity entity, Exception exception) GetById(int id)
         {
-            return Context.Set<TEntity>().Find(id);
+            TEntity entity = null;
+            Exception exception = null;
+
+            try { entity = Context.Set<TEntity>().Find(id); }
+            catch (Exception e) { exception = e; }
+
+            return (entity, exception);
         }
 
-        public virtual IEnumerable<TEntity> List()
+        public virtual (IEnumerable<TEntity> entities, Exception exception) List()
         {
-            return Context.Set<TEntity>().AsEnumerable();
+            IEnumerable<TEntity> entities = null;
+            Exception exception = null;
+
+            try { entities = Context.Set<TEntity>().AsEnumerable(); }
+            catch (Exception e) { exception = e; }
+
+            return (entities, exception);
         }
 
-        public virtual IEnumerable<TEntity> List(Expression<Func<TEntity, bool>> predicate)
+        public virtual (IEnumerable<TEntity> entities, Exception exception) List(Expression<Func<TEntity, bool>> predicate)
         {
-            return Context.Set<TEntity>()
-                .Where(predicate)
-                .AsEnumerable();
+            IEnumerable<TEntity> entities = null;
+            Exception exception = null;
+
+            try
+            {
+                entities = Context.Set<TEntity>()
+                    .Where(predicate)
+                    .AsEnumerable();
+            }
+            catch (Exception e)
+            {
+                exception = e;
+            }
+
+            return (entities, exception);
         }
 
-        public virtual void Insert(TEntity entity)
+        public virtual (bool succeeded, Exception exception) Insert(TEntity entity)
         {
-            Context.Set<TEntity>().Add(entity);
-            Context.SaveChanges();
+            var succeeded = false;
+            Exception exception = null;
+
+            try
+            {
+                if (entity.Id == Guid.Empty) { entity.Id = Guid.NewGuid(); }
+
+                Context.Set<TEntity>().Add(entity);
+                Context.SaveChanges();
+                succeeded = true;
+            }
+            catch (Exception e)
+            {
+                exception = e;
+            }
+
+            return (succeeded, exception);
         }
 
-        public virtual void Update(TEntity entity)
+        public virtual (bool succeeded, Exception exception) Update(TEntity entity)
         {
-            Context.Entry(entity).State = EntityState.Modified;
-            Context.SaveChanges();
+            var succeeded = false;
+            Exception exception = null;
+
+            try
+            {
+                Context.Entry(entity).State = EntityState.Modified;
+                Context.SaveChanges();
+                succeeded = true;
+            }
+            catch (Exception e)
+            {
+                exception = e;
+            }
+
+            return (succeeded, exception);
         }
 
-        public virtual void Delete(TEntity entity)
+        public virtual (bool succeeded, Exception exception) Delete(TEntity entity)
         {
-            Context.Set<TEntity>().Remove(entity);
-            Context.SaveChanges();
+            var succeeded = false;
+            Exception exception = null;
+
+            try
+            {
+                Context.Set<TEntity>().Remove(entity);
+                Context.SaveChanges();
+                succeeded = true;
+            }
+            catch (Exception e)
+            {
+                exception = e;
+            }
+
+            return (succeeded, exception);
         }
     }
 }

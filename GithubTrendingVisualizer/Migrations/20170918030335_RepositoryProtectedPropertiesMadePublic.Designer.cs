@@ -11,9 +11,10 @@ using System;
 namespace GithubTrendingVisualizer.Web.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20170918030335_RepositoryProtectedPropertiesMadePublic")]
+    partial class RepositoryProtectedPropertiesMadePublic
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -46,9 +47,6 @@ namespace GithubTrendingVisualizer.Web.Migrations
                     b.Property<int>("StargazersCount");
 
                     b.HasKey("Id");
-
-                    b.HasAlternateKey("GithubId")
-                        .HasName("UniqueKey_GithubId");
 
                     b.ToTable("Repository");
                 });
