@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using GithubTrendingVisualizer.Models.Repositories;
-using System.Threading.Tasks;
-using GithubTrendingVisualizer.Data.Models;
+﻿using GithubTrendingVisualizer.Data.Models;
 using GithubTrendingVisualizer.Data.Repositories;
+using GithubTrendingVisualizer.Models.Repositories;
+using Octokit;
+using System.Linq;
+using System.Threading.Tasks;
+using Repository = GithubTrendingVisualizer.Data.Models.Repository;
 
 namespace GithubTrendingVisualizer.Services
 {
@@ -18,13 +19,13 @@ namespace GithubTrendingVisualizer.Services
             GithubServices = new GithubServices();
         }
 
-        public async Task<RepositoriesViewModel> CreateRepositoriesViewModel(int page)
+        public async Task<RepositoriesViewModel> CreateRepositoriesViewModel(int page, Language? language)
         {
             if (page < 1) { page = 1; }
             if (page > 100) { page = 100; }
 
             // reading from Github
-            var repositoriesResponse = await GithubServices.GetTrendingRepositories(page);
+            var repositoriesResponse = await GithubServices.GetTrendingRepositories(page, language);
             var savedRepositories = repositoriesResponse.repositories.ToDictionary(repository => repository.Id, repository => false);
 
             // reading from database
@@ -43,6 +44,8 @@ namespace GithubTrendingVisualizer.Services
                 Repositories = repositoriesResponse.repositories,
                 RateLimit = repositoriesResponse.rateLimit,
                 Page = page,
+                TotalCount = repositoriesResponse.totalCount,
+                Language = language,
                 SavedRepositories = savedRepositories
             };
 

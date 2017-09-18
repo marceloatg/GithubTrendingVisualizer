@@ -5,14 +5,46 @@
 <div id="repositories-content" class="ui container">
 
     @* Title *@
-    <h1 class="ui dividing header">
-        <div class="content">
-            Trending in open source
-            <div class="sub header">
-                See what the GitHub community is most excited about today. (@Model.RateLimit.Remaining/@Model.RateLimit.Limit)
+    <form class="ui form segment">
+
+        @* Header *@
+        <h1 class="ui dividing header">
+            <div class="content">
+                Trending in open source
+                <div class="sub header">
+                    See what the GitHub community is most excited about. (@Model.RateLimit.Remaining/@Model.RateLimit.Limit)
+                </div>
+            </div>
+        </h1>
+
+        @* Fields *@
+        <input type="hidden" name="Page" value="@Model.Page" />
+
+        @* Language *@
+        <div class="field">
+            <div class="ui fluid search selection dropdown">
+                <input asp-for="Language" type="hidden">
+                <i class="dropdown icon"></i>
+                <div class="default text">All Languages</div>
+                <div class="menu">
+                    @foreach (object language in Enum.GetValues(typeof(Language)))
+                    {
+                        <div class="item" data-value="@language.ToString()">
+                            @language
+                        </div>
+                    }
+                </div>
             </div>
         </div>
-    </h1>
+
+        @* Button *@
+        <div class="field">
+            <button id="filter-repositories-button" type="submit" class="ui primary button">
+                Filter
+            </button>
+        </div>
+
+    </form>
 
     @* Item list *@
     <div class="ui middle aligned selection items list">
@@ -42,9 +74,9 @@
                     language = repository.Language;
                     break;
             }
-            
+
             <div id="@repository.Id" class="item card">
-                
+
                 <input name="GithubId" type="hidden" value="@repository.Id" />
                 <input name="Name" type="hidden" value="@repository.Name" />
                 <input name="HtmlUrl" type="hidden" value="@repository.HtmlUrl" />
@@ -70,16 +102,16 @@
                             @repository.Name
                         </h2>
                     </a>
-                    
+
                     @* Meta *@
                     <div class="meta">
-                        
+
                         @* Forks count *@
                         <span>
                             <i class="star icon"></i>
                             @repository.StargazersCount.ToString("N0")
                         </span>
-                        
+
                         @* Stars count *@
                         <span>
                             <i class="fork icon"></i>
@@ -95,7 +127,7 @@
 
                     @* Extra *@
                     <div class="extra">
-                        
+
                         @* Save button *@
                         @if (Model.SavedRepositories[repository.Id])
                         {
@@ -129,54 +161,7 @@
     </div>
 
     @* Pagination *@
-    <div class="ui pagination menu">
-
-        @if (Model.Page > 2)
-            {
-            <a asp-action="Trending" asp-route-page="1" class="item">
-                1
-            </a>
-        }
-        @if (Model.Page > 3)
-        {
-            <div class="disabled item">
-                ...
-            </div>
-        }
-
-        @if (Model.Page > 1)
-        {
-            <a asp-action="Trending" asp-route-page="@(Model.Page - 1)" class="item">
-                @(Model.Page - 1)
-            </a>
-        }
-
-        <a class="item active">
-            @(Model.Page)
-        </a>
-
-        @if (Model.Page < 100)
-        {
-            <a asp-action="Trending" asp-route-page="@(Model.Page + 1)" class="item">
-                @(Model.Page + 1)
-            </a>
-        }
-
-        @if (Model.Page < 98)
-        {
-            <div class="disabled item">
-                ...
-            </div>
-        }
-
-        @if (Model.Page < 99)
-        {
-            <a asp-action="Trending" asp-route-page="100" class="item">
-                100
-            </a>
-        }
-
-    </div>
+    @await Html.PartialAsync("_TrendingPagination", Model, null)
 
     <br />
     <br />

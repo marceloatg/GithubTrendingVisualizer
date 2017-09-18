@@ -6,12 +6,26 @@
 $(".ui.dropdown")
     .dropdown();
 
+$("#repositories-button")
+    .on("click", setLoadingState);
+
+$("#developers-button")
+    .on("click", setLoadingState);
+
+$("#filter-repositories-button")
+    .on("click", setLoadingState);
+
 $("[data-button='save-repository']")
     .on("click", saveRepository);
 
 /*
  * Functions
  */
+
+function setLoadingState(event) {
+
+    $(event.currentTarget).addClass("loading");
+}
 
 function saveRepository(event) {
 

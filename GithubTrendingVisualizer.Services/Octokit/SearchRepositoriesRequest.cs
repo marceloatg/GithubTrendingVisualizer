@@ -36,6 +36,11 @@ namespace GithubTrendingVisualizer.Services.Octokit
 
             if (Language != null)
             {
+                if (Language == global::Octokit.Language.CPlusPlus)
+                {
+                    parameters.Add(string.Format(CultureInfo.InvariantCulture, "language:c%2B%2B"));
+                }
+
                 parameters.Add(string.Format(CultureInfo.InvariantCulture, "language:{0}", Language));
             }
 

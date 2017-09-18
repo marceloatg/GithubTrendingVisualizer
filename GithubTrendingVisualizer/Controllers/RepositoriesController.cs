@@ -3,6 +3,8 @@ using GithubTrendingVisualizer.Data.Models;
 using GithubTrendingVisualizer.Models.Repositories;
 using GithubTrendingVisualizer.Services;
 using Microsoft.AspNetCore.Mvc;
+using Octokit;
+using Repository = GithubTrendingVisualizer.Data.Models.Repository;
 
 namespace GithubTrendingVisualizer.Web.Controllers
 {
@@ -19,9 +21,9 @@ namespace GithubTrendingVisualizer.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Trending([FromQuery] int page)
+        public async Task<IActionResult> Trending([FromQuery] int page, [FromQuery] Language? language = null)
         {
-            RepositoriesViewModel model = await RepositoriesServices.CreateRepositoriesViewModel(page);
+            RepositoriesViewModel model = await RepositoriesServices.CreateRepositoriesViewModel(page, language);
             return View(model);
         }
 

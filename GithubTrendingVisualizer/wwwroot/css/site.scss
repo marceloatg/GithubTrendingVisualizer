@@ -11,18 +11,26 @@ body {
 }
 
 .home-text-panel {
+    position: relative;
     height: calc(100% + #{$home-height-offset});
     margin-top: -$home-height-offset;
     background-color: #a8cbcd;
     background-image: url(../images/rocket.svg);
     background-repeat: no-repeat;
-    background-position-y: 0;
+    background-position-x: -5%;
     background-position-y: 50%;
-    background-size: 25%;
+    background-size: 32%;
 
-    h2 {
-        color: #333333 !important;
-        font-family: 'Nunito', sans-serif !important;
+    .segment {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+
+        h2 {
+            color: #333333 !important;
+            font-family: 'Nunito', sans-serif !important;
+        }
     }
 }
 

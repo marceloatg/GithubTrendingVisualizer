@@ -1,6 +1,7 @@
-﻿using Octokit;
-using System;
+﻿using System;
+using Octokit;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using SearchRepositoriesRequest = GithubTrendingVisualizer.Services.Octokit.SearchRepositoriesRequest;
 
@@ -16,11 +17,9 @@ namespace GithubTrendingVisualizer.Services
             Client = new GitHubClient(new ProductHeaderValue("GithubTrendingVisualizer"));
         }
 
-        public async Task<(List<Repository> repositories, RateLimit rateLimit)>
-            GetTrendingRepositories(int page)
+        public async Task<(List<Repository> repositories, int totalCount, RateLimit rateLimit)>
+            GetTrendingRepositories(int page, Language? language)
         {
-            var repositories = new List<Repository>();
-
             var request = new SearchRepositoriesRequest
             {
                 User = string.Empty,
@@ -31,10 +30,29 @@ namespace GithubTrendingVisualizer.Services
                 PerPage = PerPage,
             };
 
-            SearchRepositoryResult response = await Client.Search.SearchRepo(request);
-            repositories.AddRange(response.Items);
+            if (language != null)
+            {
+                request.Language = language;
+                request.User = null;
+            }
 
-            return (repositories, GetRateLimit());
+            SearchRepositoryResult response;
+
+            try
+            {
+                response = await Client.Search.SearchRepo(request);
+            }
+            catch (ApiValidationException)
+            {
+                request.Language = null;
+                request.User = string.Empty;
+
+                response = await Client.Search.SearchRepo(request);
+            }
+
+            var repositories = new List<Repository>();
+            repositories.AddRange(response.Items);
+            return (repositories, response.TotalCount, GetRateLimit());
         }
 
         public void GetTrendingDevelopers()

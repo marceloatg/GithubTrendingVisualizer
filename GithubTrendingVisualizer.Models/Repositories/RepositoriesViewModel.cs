@@ -9,6 +9,8 @@ namespace GithubTrendingVisualizer.Models.Repositories
         public Dictionary<long, bool> SavedRepositories { get; set; }
         public RateLimit RateLimit { get; set; }
         public int Page { get; set; }
+        public int TotalCount { get; set; }
+        public Language? Language { get; set; }
 
         public RepositoriesViewModel()
         {

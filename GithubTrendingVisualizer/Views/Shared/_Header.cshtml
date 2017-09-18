@@ -4,15 +4,27 @@
     </a>
     <div class="right menu">
 
-        <a class="item">
-            About
-        </a>
-
-        <div id="language-dropdown" class="ui dropdown item">
-            Language <i class="dropdown icon"></i>
+        <div class="ui dropdown item">
+            Repositories <i class="dropdown icon"></i>
             <div class="menu">
-                <a class="item">Português</a>
-                <a class="item">English</a>
+                <a asp-controller="Repositories" asp-action="Trending" asp-route-page="1" class="item">
+                    Trending
+                </a>
+                <a asp-controller="Repositories" asp-action="Saved" asp-route-page="1" class="item">
+                    Saved
+                </a>
+            </div>
+        </div>
+
+        <div class="ui dropdown item">
+            Developers <i class="dropdown icon"></i>
+            <div class="menu">
+                <a asp-controller="Developers" asp-action="Trending" asp-route-page="1" class="item">
+                    Trending
+                </a>
+                <a asp-controller="Developers" asp-action="Saved" asp-route-page="1" class="item">
+                    Saved
+                </a>
             </div>
         </div>
 
