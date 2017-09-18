@@ -24,6 +24,7 @@ namespace GithubTrendingVisualizer.Services
             var request = new SearchRepositoriesRequest
             {
                 User = string.Empty,
+                Fork = ForkQualifier.IncludeForks,
                 SortField = RepoSearchSort.Stars,
                 Order = SortDirection.Descending,
                 Page = page,
