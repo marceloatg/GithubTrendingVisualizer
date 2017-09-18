@@ -59,6 +59,23 @@
                             @repository.Name
                         </h2>
                     </a>
+                    
+                    @* Meta *@
+                    <div class="meta">
+                        
+                        @* Forks count *@
+                        <span>
+                            <i class="star icon"></i>
+                            @repository.StargazersCount.ToString("N0")
+                        </span>
+                        
+                        @* Stars count *@
+                        <span>
+                            <i class="fork icon"></i>
+                            @repository.ForksCount.ToString("N0")
+                        </span>
+
+                    </div>
 
                     @* Description *@
                     <div class="description">
@@ -72,26 +89,6 @@
                         <div class="ui right floated primary button">
                             <i class="save icon"></i>
                             Save
-                        </div>
-
-                        @* Fork button *@
-                        <div class="ui right floated left labeled button" tabindex="0">
-                            <a class="ui basic right pointing label">
-                                @repository.ForksCount.ToString("N0")
-                            </a>
-                            <div class="ui button">
-                                <i class="fork icon"></i>Fork
-                            </div>
-                        </div>
-
-                        @* Star button *@
-                        <div class="ui right floated left labeled button" tabindex="0">
-                            <a class="ui basic right pointing label">
-                                @repository.StargazersCount.ToString("N0")
-                            </a>
-                            <div class="ui button">
-                                <i class="star icon"></i> Star
-                            </div>
                         </div>
 
                         @* Owner *@

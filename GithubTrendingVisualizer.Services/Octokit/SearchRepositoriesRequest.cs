@@ -5,7 +5,6 @@ namespace GithubTrendingVisualizer.Services.Octokit
 {
     public class SearchRepositoriesRequest : global::Octokit.SearchRepositoriesRequest
     {
-
         public override IReadOnlyList<string> MergedQualifiers()
         {
             var parameters = new List<string>();
@@ -54,8 +53,8 @@ namespace GithubTrendingVisualizer.Services.Octokit
             {
                 parameters.Add(string.Format(CultureInfo.InvariantCulture, "pushed:{0}", Updated));
             }
+            
             return parameters;
         }
-
     }
 }
