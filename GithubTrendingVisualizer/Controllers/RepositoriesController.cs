@@ -37,9 +37,10 @@ namespace GithubTrendingVisualizer.Web.Controllers
 
         [HttpGet]
         [Route("[action]")]
-        public IActionResult Saved()
+        public IActionResult Saved([FromQuery] int page, [FromQuery] string language)
         {
-            return View();
+            SavedRepositoriesViewModel model = RepositoriesServices.CreateSavedViewModel(page, language);
+            return View(model);
         }
-    }
+}
 }

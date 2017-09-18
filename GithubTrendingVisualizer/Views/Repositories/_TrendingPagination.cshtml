@@ -18,7 +18,7 @@
             </div>
         }
 
-        @if (Model.Page > 1 && Model.TotalCount > 40)
+        @if (Model.Page > 1)
         {
             <a asp-action="Trending" asp-route-page="@(Model.Page - 1)" asp-route-language="@Model.Language" class="item">
                 @(Model.Page - 1)
