@@ -1,23 +1,16 @@
-﻿@using GithubTrendingVisualizer.Models
-@model ErrorViewModel
-@{
-    ViewData["Title"] = "Error";
-}
+﻿<div class="home-text-panel">
+    <div class="ui raised very padded text container center aligned segment">
 
-<h1 class="text-danger">Error.</h1>
-<h2 class="text-danger">An error occurred while processing your request.</h2>
+        <h2 class="ui header">
+            You have exceeded the anonymous calls limit of the Github API, please wait a few moments to re-use this application.
+        </h2>
 
-@if (Model.ShowRequestId)
-{
-    <p>
-        <strong>Request ID:</strong> <code>@Model.RequestId</code>
-    </p>
-}
+        <br />
 
-<h3>Development Mode</h3>
-<p>
-    Swapping to <strong>Development</strong> environment will display more detailed information about the error that occurred.
-</p>
-<p>
-    <strong>Development environment should not be enabled in deployed applications</strong>, as it can result in sensitive information from exceptions being displayed to end users. For local debugging, development environment can be enabled by setting the <strong>ASPNETCORE_ENVIRONMENT</strong> environment variable to <strong>Development</strong>, and restarting the application.
-</p>
+        <a id="repositories-button" asp-controller="Repositories" asp-action="Trending" asp-route-page="1" class="ui basic teal button">
+            <i class="icon book"></i>
+            Repositories
+        </a>
+
+    </div>
+</div>
