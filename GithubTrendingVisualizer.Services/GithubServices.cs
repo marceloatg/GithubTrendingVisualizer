@@ -1,7 +1,5 @@
-﻿using System;
-using Octokit;
+﻿using Octokit;
 using System.Collections.Generic;
-using System.Threading;
 using System.Threading.Tasks;
 using SearchRepositoriesRequest = GithubTrendingVisualizer.Services.Octokit.SearchRepositoriesRequest;
 
@@ -54,12 +52,7 @@ namespace GithubTrendingVisualizer.Services
             repositories.AddRange(response.Items);
             return (repositories, response.TotalCount, GetRateLimit());
         }
-
-        public void GetTrendingDevelopers()
-        {
-
-        }
-
+        
         private RateLimit GetRateLimit()
         {
             ApiInfo apiInfo = Client.GetLastApiInfo();

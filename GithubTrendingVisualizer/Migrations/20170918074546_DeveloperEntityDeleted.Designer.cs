@@ -11,9 +11,10 @@ using System;
 namespace GithubTrendingVisualizer.Web.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20170918074546_DeveloperEntityDeleted")]
+    partial class DeveloperEntityDeleted
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

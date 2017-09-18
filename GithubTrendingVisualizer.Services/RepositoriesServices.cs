@@ -33,8 +33,8 @@ namespace GithubTrendingVisualizer.Services
 
             // reading from database
             var savedRepositoriesReading =
-                new RepositoryRepository(Context).List(repository =>
-                    savedRepositories.Keys.Contains(repository.GithubId));
+                new RepositoryRepository(Context)
+                    .List(repository => savedRepositories.Keys.Contains(repository.GithubId));
 
             if (savedRepositoriesReading.entities == null) { return null; }
             foreach (Repository repository in savedRepositoriesReading.entities)
